@@ -1,0 +1,26 @@
+---
+- name: Apache installation
+  hosts: webservers
+  become: true
+  vars:
+    app: apache2
+    source: index.html
+    destination: /var/www/html/index.html
+  tasks:
+    - name: update OS
+      command: apt update
+
+    - name: install apache2
+      apt:
+        name: "{{ app }}"
+        state: present
+
+    - name: Apache Service start
+      service:
+        name: "{{ app }}"
+        state: started
+  
+    - name: copy config file
+      copy:
+        src: "{{ source }}"
+        dest: "{{ destination }}"

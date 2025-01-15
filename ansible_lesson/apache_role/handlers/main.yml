@@ -1,0 +1,6 @@
+---
+# handlers file for apache_role
+- name: Restart Apache Service
+  service:
+    name: "{{ app }}"
+    state: restarted

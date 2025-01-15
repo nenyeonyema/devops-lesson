@@ -1,0 +1,21 @@
+---
+# tasks file for apache_role
+- name: Update OS
+  command: apt update
+
+- name: Install Apache2
+  apt:
+    name: "{{ app }}"
+    state: present
+
+- name: Ensure Apache2 service is started
+  service:
+    name: "{{ app }}"
+    state: started
+
+- name: Copy configuration file
+  copy:
+    src: "{{ source }}"
+    dest: "{{ destination }}"
+  notify:
+    - Restart Apache Service

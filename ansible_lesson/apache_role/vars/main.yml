@@ -1,0 +1,6 @@
+---
+# vars file for apache_role
+
+app: apache2
+source: index.html
+destination: /var/www/html/index.html
