@@ -1,22 +1,13 @@
 # Use the official Jenkins LTS image from Docker Hub
-FROM jenkins/jenkins:lts
-
-# Switch to root user to install dependencies
+FROM jenkins/jenkins:2.414.2-jdk11
 USER root
-
-# Install necessary packages (optional, adjust as needed)
-RUN apt-get update && \
-    apt-get install -y git docker.io && \
-    apt-get clean
-
-# Switch back to Jenkins user
+RUN apt-get update && apt-get install -y lsb-release python3-pip
+RUN curl -fsSLo /usr/share/keyrings/docker-archive-keyring.asc \
+  https://download.docker.com/linux/debian/gpg
+RUN echo "deb [arch=$(dpkg --print-architecture) \
+  signed-by=/usr/share/keyrings/docker-archive-keyring.asc] \
+  https://download.docker.com/linux/debian \
+  $(lsb_release -cs) stable" > /etc/apt/sources.list.d/docker.list
+RUN apt-get update && apt-get install -y docker-ce-cli
 USER jenkins
-
-# Expose necessary ports
-EXPOSE 8080 50000
-
-# Set Jenkins home directory
-VOLUME /var/jenkins_home
-
-# Default command to run Jenkins
-CMD ["jenkins"]
+CMD ["java", "-jar", "/usr/share/jenkins/jenkins.war"]
