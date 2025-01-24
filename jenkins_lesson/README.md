@@ -1,11 +1,9 @@
 **Step-by-Step Instructions to Run the Jenkins Container**
 Create the Docker image from the Dockerfile:
 
-```
-docker build -t my-jenkins .
-Run the Jenkins container:
-```
+`docker build -t my-jenkins . `
 
+Run the Jenkins container:
 ```
 docker run -d -p 8080:8080 -p 50000:50000 --name jenkins my-jenkins
 -d runs the container in detached mode (in the background).
